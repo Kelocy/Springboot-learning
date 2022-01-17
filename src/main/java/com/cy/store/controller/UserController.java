@@ -18,11 +18,26 @@ public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
 
+    /**
+     * 约定大于配置：开发思想，省略大量的配置甚至注解的编写
+     * 1. 接收数据的方式：请求处理方法的参数列表设置为pojo类型来接收前端的数据
+     *  Springboot会将前端的url地址中的参数名和pojo类的属性名进行比较，如果这两个名称相同，则将值注入到pojo类中对应的属性上
+     */
     @RequestMapping("reg")
     // @ResponseBody  // 表示此方法的响应结果以json格式进行数据的响应到前端
     public JsonResult<Void> reg(User user) {
         userService.reg(user);
         return new JsonResult<>(OK);
+    }
+
+    /**
+     * 1. 接收数据的方式：请求处理方法的参数列表设置为非pojo类型
+     *  Springboot会将请求的参数名和方法中的参数名和方法的参数名进行比较，如果名称相同，则自动完成值的依赖注入
+     */
+    @RequestMapping("login")
+    public JsonResult<User> login(String username, String password) {
+        User data = userService.login(username, password);
+        return new JsonResult<User>(OK, data);
     }
 
     /*
