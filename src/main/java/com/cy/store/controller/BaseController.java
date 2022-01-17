@@ -4,6 +4,8 @@ import com.cy.store.service.ex.*;
 import com.cy.store.util.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpSession;
+
 /** 表示控制层的基类 */
 public class BaseController {
     /** 操作成功的状态码 */
@@ -29,5 +31,23 @@ public class BaseController {
             result.setMessage("注册时产生未知的异常");
         }
         return result;
+    }
+
+    /**
+     * 获取session对象中的uid
+     * @param session session对象
+     * @return  当前登录用户的uid的值
+     */
+    protected final Integer getUidFromSession(HttpSession session) {
+        return Integer.valueOf(session.getAttribute("uid").toString());
+    }
+
+    /**
+     * 获取当前登陆用户的username
+     * @param session session对象
+     * @return  当前登录用户的用户名称
+     */
+    protected final String getUserNameFromSession(HttpSession session) {
+        return session.getAttribute("username").toString();
     }
 }
