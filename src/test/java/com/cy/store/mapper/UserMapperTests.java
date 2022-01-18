@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.swing.*;
+import java.util.Date;
 
 // @SpringBootTest：表示标注当前的类是一个测试类，不会随项目一块打包
 @SpringBootTest
@@ -39,4 +40,16 @@ public class UserMapperTests {
         User user = userMapper.findByUsername("tim");
         System.out.println(user);
     }
+
+    @Test
+    public void updatePasswordByUid() {
+       Integer rows = userMapper.updatePasswordByUid(7, "321", "Administrator", new Date());
+       System.out.println(rows);
+    }
+
+    @Test
+    public void findByUid() {
+        System.out.println(userMapper.findByUid(7));
+    }
+
 }

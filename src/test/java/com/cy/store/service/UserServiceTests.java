@@ -29,7 +29,7 @@ public class UserServiceTests {
     public void reg() {
         try {
             User user = new User();
-            user.setUsername("tom");
+            user.setUsername("test02");
             user.setPassword("123");
             userService.reg(user);
             System.out.println("OK");
@@ -46,5 +46,8 @@ public class UserServiceTests {
         System.out.println(user);
     }
 
-
+    @Test
+    public void changePassword() {
+        userService.changePassword(8, "Administrator", "123", "321");
+    }
 }
