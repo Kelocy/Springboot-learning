@@ -50,4 +50,18 @@ public class UserServiceTests {
     public void changePassword() {
         userService.changePassword(8, "Administrator", "123", "321");
     }
+
+    @Test
+    public void getByUid() {
+        System.out.println(userService.getByUid(8));
+    }
+
+    @Test
+    public void changeInfo() {
+        User user = new User();
+        user.setPhone("351726837921");
+        user.setEmail("37291439189@qq.com");
+        user.setGender(0);
+        userService.changeInfo(8, "JOJO", user);
+    }
 }

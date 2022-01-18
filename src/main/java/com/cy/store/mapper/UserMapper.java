@@ -42,4 +42,11 @@ public interface UserMapper {
      * @return  如果找到则返回对象，否则返回null值
      */
     User findByUid(Integer uid);
+
+    /**
+     * 更新用户的数据信息
+     * @param user  用户的数据
+     * @return  返回值为受影响的行数
+     */
+    Integer updateInfoByUid(User user);
 }
