@@ -2,6 +2,7 @@ package com.cy.store.mapper;
 
 
 import com.cy.store.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -49,4 +50,22 @@ public interface UserMapper {
      * @return  返回值为受影响的行数
      */
     Integer updateInfoByUid(User user);
+
+    /**
+     * @Param("SQL映射文件中#{}占位符的变量名")：解决的问题：
+     * 当SQL语句的占位符和映射的接口方法的参数名不一致时，需要将某个参数强行注入到某个占位符变量上时，
+     * 可以使用@Param这个注解来标注映射的关系
+     *
+     * 根据用户的uid值修改用户的头像
+     * @param uid
+     * @param avatar
+     * @param modifiedUser
+     * @param modifiedTime
+     * @return
+     */
+    Integer updateAvatarByUid(
+            @Param("uid") Integer uid,
+            @Param("avatar") String avatar,
+            @Param("modifiedUser") String modifiedUser,
+            @Param("modifiedTime") Date modifiedTime);
 }
