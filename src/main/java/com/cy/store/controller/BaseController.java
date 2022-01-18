@@ -50,7 +50,7 @@ public class BaseController {
      * @param session session对象
      * @return  当前登录用户的用户名称
      */
-    protected final String getUserNameFromSession(HttpSession session) {
+    protected final String getUsernameFromSession(HttpSession session) {
         return session.getAttribute("username").toString();
     }
 }

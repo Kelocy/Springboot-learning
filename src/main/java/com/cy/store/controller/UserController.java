@@ -2,13 +2,9 @@ package com.cy.store.controller;
 
 import com.cy.store.entity.User;
 import com.cy.store.service.IUserService;
-import com.cy.store.service.ex.InsertException;
-import com.cy.store.service.ex.UsernameDuplicateException;
 import com.cy.store.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -23,7 +19,7 @@ public class UserController extends BaseController {
     /**
      * 约定大于配置：开发思想，省略大量的配置甚至注解的编写
      * 1. 接收数据的方式：请求处理方法的参数列表设置为pojo类型来接收前端的数据
-     *  Springboot会将前端的url地址中的参数名和pojo类的属性名进行比较，如果这两个名称相同，则将值注入到pojo类中对应的属性上
+     *  Springboot会将前端的url地址中的参数名和pojo类的属性名进行比较，如果这两个名称相同，则将值注入到pojo类中对应的属性上，即自动注入
      */
     @RequestMapping("reg")
     // @ResponseBody  // 表示此方法的响应结果以json格式进行数据的响应到前端
@@ -46,7 +42,7 @@ public class UserController extends BaseController {
 
         // 获取session中绑定的数据
         System.out.println(getUidFromSession(session));
-        System.out.println(getUserNameFromSession(session));
+        System.out.println(getUsernameFromSession(session));
 
         return new JsonResult<User>(OK, data);
     }
@@ -54,8 +50,24 @@ public class UserController extends BaseController {
     @RequestMapping("change_password")
     public JsonResult<Void> changePassword(String oldPassword, String newPassword, HttpSession session) {
         Integer uid = getUidFromSession(session);
-        String username = getUserNameFromSession(session);
+        String username = getUsernameFromSession(session);
         userService.changePassword(uid, username, oldPassword, newPassword);
+        return new JsonResult<>(OK);
+    }
+
+    @RequestMapping("get_by_uid")
+    public JsonResult<User> getByUid(HttpSession session) {
+        User data = userService.getByUid(getUidFromSession(session));
+        return new JsonResult<User>(OK, data);
+    }
+
+    @RequestMapping("change_info")
+    public JsonResult<Void> changeInfo(User user, HttpSession session) {
+        // user对象有四部分数据：username，phone，email，gender
+        // uid数据需要再次封装到user对象中
+        Integer uid = getUidFromSession(session);
+        String username = getUsernameFromSession(session);
+        userService.changeInfo(uid, username, user);
         return new JsonResult<>(OK);
     }
 
