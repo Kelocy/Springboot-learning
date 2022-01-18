@@ -51,6 +51,14 @@ public class UserController extends BaseController {
         return new JsonResult<User>(OK, data);
     }
 
+    @RequestMapping("change_password")
+    public JsonResult<Void> changePassword(String oldPassword, String newPassword, HttpSession session) {
+        Integer uid = getUidFromSession(session);
+        String username = getUserNameFromSession(session);
+        userService.changePassword(uid, username, oldPassword, newPassword);
+        return new JsonResult<>(OK);
+    }
+
     /*
     @RequestMapping("reg")
     // @ResponseBody  // 表示此方法的响应结果以json格式进行数据的响应到前端
