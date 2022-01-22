@@ -64,4 +64,9 @@ public class UserServiceTests {
         user.setGender(0);
         userService.changeInfo(8, "JOJO", user);
     }
+
+    @Test
+    public void changeAvatar() {
+        userService.changeAvatar(8, "/upload/test.png", "DIO");
+    }
 }
