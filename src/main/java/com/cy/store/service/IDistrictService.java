@@ -11,4 +11,6 @@ public interface IDistrictService {
      * @return  多个区域的信息
      */
     List<District> getByParent(String parent);
+
+    String getNameByCode(String code);
 }

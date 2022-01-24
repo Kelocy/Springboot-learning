@@ -3,6 +3,7 @@ package com.cy.store.service.impl;
 import com.cy.store.entity.Address;
 import com.cy.store.mapper.AddressMapper;
 import com.cy.store.service.IAddressService;
+import com.cy.store.service.IDistrictService;
 import com.cy.store.service.ex.AddressCountLimitException;
 import com.cy.store.service.ex.InsertException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ public class AddressServiceImpl implements IAddressService {
     @Autowired
     private AddressMapper addressMapper;
 
+    // 在添加用户的收货地址的业务层依赖于DistrictService业务层接口
+    @Autowired
+    private IDistrictService districtService;
+
     @Value("${user.address.max-count}")
     private Integer maxCount;
 
@@ -27,6 +32,14 @@ public class AddressServiceImpl implements IAddressService {
         if (count >= maxCount) {
             throw new AddressCountLimitException("用户收货地址超出上限");
         }
+
+        // 对address对象中的数据进行补全：省市区
+        String provinceName = districtService.getNameByCode(address.getProvinceCode());
+        String cityName = districtService.getNameByCode(address.getCityCode());
+        String areaName = districtService.getNameByCode(address.getAreaCode());
+        address.setProvinceName(provinceName);
+        address.setCityName(cityName);
+        address.setAreaName(areaName);
 
         // uid, isDefault
         address.setUid(uid);
