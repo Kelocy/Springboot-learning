@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /** 表示新增收货地址的实现类 */
 @Service
@@ -56,5 +57,25 @@ public class AddressServiceImpl implements IAddressService {
         if (rows != 1) {
             throw new InsertException("插入用户的收货地址产生未知的异常");
         }
+    }
+
+    @Override
+    public List<Address> getByUid(Integer uid) {
+        List<Address> list = addressMapper.findByUid(uid);
+        for (Address address: list) {
+            address.setUid(null);
+            address.setProvinceCode(null);
+            address.setCityCode(null);
+            address.setAreaCode(null);
+            address.setZip(null);
+            address.setTel(null);
+            address.setIsDefault(null);
+            address.setCreatedTime(null);
+            address.setCreatedUser(null);
+            address.setModifiedTime(null);
+            address.setModifiedUser(null);
+
+        }
+        return list;
     }
 }

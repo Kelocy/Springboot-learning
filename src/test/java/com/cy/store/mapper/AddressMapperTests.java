@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 // @SpringBootTest：表示标注当前的类是一个测试类，不会随项目一块打包
 @SpringBootTest
@@ -39,5 +40,11 @@ public class AddressMapperTests {
     public void countByUid() {
         Integer count = addressMapper.countByUid(9);
         System.out.println(count);
+    }
+
+    @Test
+    public void findByUid() {
+        List<Address> list = addressMapper.findByUid(9);
+        System.out.println(list);
     }
 }
