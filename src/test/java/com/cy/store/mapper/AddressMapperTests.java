@@ -3,6 +3,7 @@ package com.cy.store.mapper;
 
 import com.cy.store.entity.Address;
 import com.cy.store.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,21 @@ public class AddressMapperTests {
     public void findByUid() {
         List<Address> list = addressMapper.findByUid(9);
         System.out.println(list);
+    }
+
+    @Test
+    public void findByAid() {
+        Address address = addressMapper.findByAid(8);
+        System.err.println(address);
+    }
+
+    @Test
+    public void updateNonDefault() {
+        addressMapper.updateNonDefault(9);
+    }
+
+    @Test
+    public void updateDefaultByAid() {
+        addressMapper.updateDefaultByAid(4, "Odoroki", new Date());
     }
 }

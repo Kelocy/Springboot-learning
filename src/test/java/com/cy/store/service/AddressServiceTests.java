@@ -28,5 +28,8 @@ public class AddressServiceTests {
         addressService.addNewAddress(9, "Administrator", address);
     }
 
-
+    @Test
+    public void setDefault() {
+        addressService.setDefault(2, 9, "Administrator");
+    }
 }
