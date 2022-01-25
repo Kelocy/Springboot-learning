@@ -64,4 +64,14 @@ public class AddressMapperTests {
     public void updateDefaultByAid() {
         addressMapper.updateDefaultByAid(4, "Odoroki", new Date());
     }
+
+    @Test
+    public void deleteByAid() {
+        addressMapper.deleteByAid(3);
+    }
+
+    @Test
+    public void findLastModified() {
+        System.out.println(addressMapper.findLastModified(9));
+    }
 }

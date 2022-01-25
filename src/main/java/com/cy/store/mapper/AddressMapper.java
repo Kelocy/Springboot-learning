@@ -49,4 +49,18 @@ public interface AddressMapper {
     Integer updateDefaultByAid(@Param("aid") Integer aid,
                                @Param("modifiedUser") String modifiedUser,
                                @Param("modifiedTime") Date modifiedTime);
+
+    /**
+     * 根据收货地址id删除收货地址数据
+     * @param aid   收货地址的id
+     * @return  受影响的行数
+     */
+    Integer deleteByAid(Integer aid);
+
+    /**
+     * 根据用户uid查询当前用户最后一次被修改的地址数据
+     * @param uid   用户id
+     * @return  收货地址数据
+     */
+    Address findLastModified(Integer uid);
 }
