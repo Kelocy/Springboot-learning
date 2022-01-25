@@ -42,6 +42,9 @@ public class BaseController {
         } else if (e instanceof UpdateException) {
             result.setState(5001);
             result.setMessage("更新数据时产生未知的异常");
+        } else if (e instanceof DeleteException) {
+            result.setState(5002);
+            result.setMessage("删除数据时产生未知的异常");
         } else if (e instanceof FileEmptyException) {
             result.setState(6000);
         } else if (e instanceof FileSizeException) {

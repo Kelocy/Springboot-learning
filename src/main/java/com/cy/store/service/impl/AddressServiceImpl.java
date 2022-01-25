@@ -123,7 +123,7 @@ public class AddressServiceImpl implements IAddressService {
         }
 
         Address address = addressMapper.findLastModified(uid);
-        rows = addressMapper.updateDefaultByAid(address.getUid(), username, new Date());
+        rows = addressMapper.updateDefaultByAid(address.getAid(), username, new Date());
         if (rows != 1) {
             throw new UpdateException("更新收货地址时产生未知的异常");
         }
