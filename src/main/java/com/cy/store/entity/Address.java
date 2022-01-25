@@ -1,7 +1,9 @@
 package com.cy.store.entity;
 
+import java.io.Serializable;
+
 /** 收货地址数据的实体类 */
-public class Address extends BaseEntity {
+public class Address extends BaseEntity implements Serializable {
     private Integer aid;
     private Integer uid;
     private String name;

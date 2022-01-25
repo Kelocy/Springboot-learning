@@ -1,7 +1,9 @@
 package com.cy.store.entity;
 
+import java.io.Serializable;
+
 /** 省市区的数据实体类 */
-public class District extends BaseEntity {
+public class District extends BaseEntity implements Serializable {
     private Integer id;
     private String parent;
     private String code;
