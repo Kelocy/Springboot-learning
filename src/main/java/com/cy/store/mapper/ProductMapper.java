@@ -9,5 +9,6 @@ import java.util.List;
 public interface ProductMapper {
     List<Product> findHotList();
 
+    // 根据商品的id查询商品信息
     Product findById(Integer id);
 }
