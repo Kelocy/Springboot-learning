@@ -1,9 +1,11 @@
 package com.cy.store.mapper;
 
 import com.cy.store.entity.Cart;
+import com.cy.store.vo.CartVO;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface CartMapper {
@@ -31,4 +33,9 @@ public interface CartMapper {
      * @return
      */
     Cart findByUidAndPid(Integer uid, Integer pid);
+
+    // VO：Value Object，值对象，当进行SELECT查询时，查询的结果数据是多张表中的内容，此时发现结果集不能直接使用某个POJO实体类来接收，
+    // POJO实体类不能包含多表查询出来的结果。
+    // 解决方式是重新去构建一个新的对象，这个对象用户存储所查询出来的结果集对应的映射，把这个对象称之为值对象
+    List<CartVO> findByUid(Integer uid);
 }

@@ -1,5 +1,9 @@
 package com.cy.store.service;
 
+import com.cy.store.vo.CartVO;
+
+import java.util.List;
+
 public interface ICartService {
     /**
      * 将商品添加到购物车中
@@ -9,4 +13,6 @@ public interface ICartService {
      * @param username  用户名(修改者)
      */
     void addToCart(Integer uid, Integer pid, Integer amount, String username);
+
+    List<CartVO> getVOByUid(Integer uid);
 }
