@@ -5,6 +5,8 @@ import com.cy.store.entity.Product;
 import com.cy.store.mapper.CartMapper;
 import com.cy.store.mapper.ProductMapper;
 import com.cy.store.service.ICartService;
+import com.cy.store.service.ex.AccessDeniedException;
+import com.cy.store.service.ex.CartNotFoundException;
 import com.cy.store.service.ex.InsertException;
 import com.cy.store.service.ex.UpdateException;
 import com.cy.store.vo.CartVO;
@@ -62,5 +64,23 @@ public class CartServiceImpl implements ICartService {
     @Override
     public List<CartVO> getVOByUid(Integer uid) {
         return cartMapper.findByUid(uid);
+    }
+
+    @Override
+    public Integer addNum(Integer cid, Integer uid, String username) {
+        Cart result = cartMapper.findByCid(cid);
+        if (result == null) {
+            throw new CartNotFoundException("数据不存在");
+        }
+        if (!result.getUid().equals(uid)) {
+            throw new AccessDeniedException("数据非法访问");
+        }
+        Integer num = result.getNum() + 1;
+        Integer rows = cartMapper.updateNumByCid(cid, num, username, new Date());
+        if (rows != 1) {
+            throw new UpdateException("更新数据失败");
+        }
+        // 返回新的购物车数据的总量
+        return num;
     }
 }

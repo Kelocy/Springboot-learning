@@ -38,4 +38,6 @@ public interface CartMapper {
     // POJO实体类不能包含多表查询出来的结果。
     // 解决方式是重新去构建一个新的对象，这个对象用户存储所查询出来的结果集对应的映射，把这个对象称之为值对象
     List<CartVO> findByUid(Integer uid);
+
+    Cart findByCid(Integer cid);
 }

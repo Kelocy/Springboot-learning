@@ -272,7 +272,7 @@
 				showCartList();
 			});
 
-			/** 战士购物车列表数据 */
+			/** 展示购物车列表数据 */
 			function showCartList() {
 				// 清空tbody标签中的数据
 				$("#cart-list").empty();
@@ -293,14 +293,14 @@
 									'<td>\n' +
 									'<input id="price-#{cid}" type="button" value="-" class="num-btn" onclick="reduceNum(1)" />\n' +
 									'<input id="goodsCount#{cid}" type="text" size="2" readonly="readonly" class="num-text" value="#{num}">\n' +
-									'<input id="price+#{cid}" class="num-btn" type="button" value="+" onclick="addNum(1)" />\n' +
+									'<input id="price+#{cid}" class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />\n' +
 									'</td>\n' +
 									'<td><span id="goodsCast#{cid}">#{totalPrice}</span></td>\n' +
 									'<td>\n' +
 									'<input type="button" onclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="删除" />\n' +
 									'</td>\n' +
 									'</tr>';
-							tr = tr.replace(/#{cid}/g, list[i].cid);
+							tr = tr.replaceAll(/#{cid}/g, list[i].cid);
 							tr = tr.replace(/#{title}/g, list[i].title);
 							tr = tr.replace(/#{image}/g, list[i].image);
 							tr = tr.replace(/#{realPrice}/g, list[i].realPrice);
@@ -322,6 +322,28 @@
 				});
 			}
 
+			function addNum(cid) {
+				$.ajax({
+					url: "/carts/" + cid + "/num/add",
+					type: "POST",
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							$("#goodsCount" + cid).val(json.data);
+							// 获取某个标签内部的内容，标签
+							let price = $("#goodsPrice" + cid).html();
+							let totalPrice = price * json.data;
+							$("#goodsCast" + cid).html(totalPrice);
+						} else {
+							alert("增加购物车数据失败：" + json.message);
+						}
+					},
+					error: function (xhr) {
+						alert("增加购物车商品数量时产生未知的异常！" + xhr.status);
+					}
+				});
+			}
+			
 			/*
 			$(function() {
 				//返回链接

@@ -45,4 +45,8 @@ public class CartMapperTests {
         System.out.println(cartMapper.findByUid(9));
     }
 
+    @Test
+    public void findByCid() {
+        System.out.println(cartMapper.findByCid(2));
+    }
 }
