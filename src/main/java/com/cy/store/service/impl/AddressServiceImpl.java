@@ -128,4 +128,23 @@ public class AddressServiceImpl implements IAddressService {
             throw new UpdateException("更新收货地址时产生未知的异常");
         }
     }
+
+    @Override
+    public Address getByAid(Integer uid, Integer aid) {
+        Address address = addressMapper.findByAid(aid);
+        if (address == null) {
+            throw new AddressNotFoundException("收货地址数据不存在");
+        }
+        if (!address.getUid().equals(uid)) {
+            throw new AccessDeniedException("非法数据方法");
+        }
+        address.setProvinceCode(null);
+        address.setCityCode(null);
+        address.setAreaCode(null);
+        address.setCreatedUser(null);
+        address.setCreatedTime(null);
+        address.setModifiedUser(null);
+        address.setModifiedTime(null);
+        return address;
+    }
 }

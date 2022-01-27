@@ -25,4 +25,6 @@ public interface IAddressService {
      * @param username  用户名
      */
     void delete(Integer aid, Integer uid, String username);
+
+    Address getByAid(Integer uid, Integer aid);
 }
