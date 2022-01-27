@@ -24,4 +24,6 @@ public interface ICartService {
      * @return  增加成功后新的数量
      */
     Integer addNum(Integer cid, Integer uid, String username);
+
+    List<CartVO> getVOByCid(Integer uid, Integer[] cids);
 }

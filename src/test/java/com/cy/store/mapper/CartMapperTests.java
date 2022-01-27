@@ -2,7 +2,6 @@ package com.cy.store.mapper;
 
 
 import com.cy.store.entity.Cart;
-import com.cy.store.entity.District;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
-import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -42,11 +40,17 @@ public class CartMapperTests {
 
     @Test
     public void findByUid() {
-        System.out.println(cartMapper.findByUid(9));
+        System.out.println(cartMapper.findVOByUid(9));
     }
 
     @Test
     public void findByCid() {
         System.out.println(cartMapper.findByCid(2));
+    }
+
+    @Test
+    public void findVOByCid() {
+        Integer[] cids = {1, 2, 3, 4, 5};
+        System.out.println(cartMapper.findVOByCid(cids));
     }
 }

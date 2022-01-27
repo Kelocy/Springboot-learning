@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -63,7 +64,7 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public List<CartVO> getVOByUid(Integer uid) {
-        return cartMapper.findByUid(uid);
+        return cartMapper.findVOByUid(uid);
     }
 
     @Override
@@ -82,5 +83,19 @@ public class CartServiceImpl implements ICartService {
         }
         // 返回新的购物车数据的总量
         return num;
+    }
+
+    @Override
+    public List<CartVO> getVOByCid(Integer uid, Integer[] cids) {
+        List<CartVO> list = cartMapper.findVOByCid(cids);
+        Iterator<CartVO> it = list.iterator();
+        while (it.hasNext()) {
+            CartVO cartVO = it.next();
+            if (!cartVO.getUid().equals(uid)) {     // 表示当前的数据不属于当前的用户
+                // 从集合中移除这个元素
+                list.remove(cartVO);
+            }
+        }
+        return list;
     }
 }

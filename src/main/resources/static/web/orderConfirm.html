@@ -21,7 +21,7 @@
 		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
 		<link rel="stylesheet" type="text/css" href="../css/orderConfirm.css" />
 		<link rel="stylesheet" type="text/css" href="../css/cart.css" />
-		<script src="../js/orderConfirm.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="../js/orderConfirm.js" type="text/javascript" charset="utf-8"></script>-->
 	</head>
 
 	<body>
@@ -249,6 +249,91 @@
 
 		</footer>
 		<!--页脚结束-->
+		<script type="text/javascript">
+			$(document).ready(function () {
+				showAddressList();
+				showCartList();
+			});
+
+			/** 展示购物车列表数据 */
+			function showCartList() {
+				// 清空tbody标签中的数据
+				$("#cart-list").empty();
+				console.log(location.search.substr(1));
+				$.ajax({
+					url: "/carts/list",
+					data: location.search.substr(1),
+					type: "GET",
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							let list = json.data;
+							let allCount = 0;
+							let allPrice = 0;
+							for (let i = 0; i < list.length; i ++) {
+								let tr = '<tr>\n' +
+										'<td><img src="..#{image}collect.png" class="img-responsive" /></td>\n' +
+										'<td>#{title}</td>\n' +
+										'<td>¥<span>#{realPrice}</span></td>\n' +
+										'<td>#{num}</td>\n' +
+										'<td><span>#{totalPrice}</span></td>\n' +
+										'</tr>';
+
+								tr = tr.replace(/#{cid}/g, list[i].cid);
+								tr = tr.replace(/#{image}/g, list[i].image);
+								tr = tr.replace(/#{title}/g, list[i].title);
+								tr = tr.replace(/#{realPrice}/g, list[i].realPrice);
+								tr = tr.replace(/#{num}/g, list[i].num);
+								tr = tr.replace(/#{totalPrice}/g, list[i].realPrice * list[i].num);
+
+								$("#cart-list").append(tr);
+
+								allCount += list[i].num;
+								allPrice += list[i].realPrice * list[i].num;
+							}
+							// 更新页面的总价和总件数
+							$("#all-count").html(allCount);
+							$("#all-price").html(allPrice);
+						}
+					},
+					error: function (xhr) {
+						alert("购物车列表数据加载产生未知的异常！" + xhr.status);
+					}
+				});
+			}
+
+			function showAddressList() {
+				// 清空tbody标签中的数据
+				$("#address-list").empty();
+				$.ajax({
+					url: "/addresses",
+					type: "GET",
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							let list = json.data;
+							for (let i = 0; i < list.length; i ++) {
+								let opt = '<option value="#{aid}">#{name}&nbsp;&nbsp;&nbsp;#{tag}&nbsp;&nbsp;&nbsp;#{provinceName}#{cityName}#{areaName}#{address}&nbsp;&nbsp;&nbsp;#{phone}</option>';
+
+								opt = opt.replace(/#{aid}/g, list[i].aid);
+								opt = opt.replace(/#{tag}/g, list[i].tag);
+								opt = opt.replace("#{name}", list[i].name);
+								opt = opt.replace("#{provinceName}", list[i].provinceName);
+								opt = opt.replace("#{cityName}", list[i].cityName);
+								opt = opt.replace("#{areaName}", list[i].areaName);
+								opt = opt.replace("#{address}", list[i].address);
+								opt = opt.replace("#{phone}", list[i].phone);
+
+								$("#address-list").append(opt);
+							}
+						}
+					},
+					error: function (xhr) {
+						alert("购物车收货地址列表加载产生未知的异常！" + xhr.status);
+					}
+				});
+			}
+		</script>
 	</body>
 
 </html>

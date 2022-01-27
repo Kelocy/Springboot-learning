@@ -36,4 +36,10 @@ public class CartController extends BaseController {
         System.out.println(data);
         return new JsonResult<>(OK, data);
     }
+
+    @RequestMapping("list")
+    public JsonResult<List<CartVO>> getVOByCid(Integer[] cids, HttpSession session) {
+        List<CartVO> data = cartService.getVOByCid(getUidFromSession(session), cids);
+        return new JsonResult<>(OK, data);
+    }
 }
