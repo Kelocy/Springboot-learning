@@ -297,7 +297,7 @@
 									'</td>\n' +
 									'<td><span id="goodsCast#{cid}">#{totalPrice}</span></td>\n' +
 									'<td>\n' +
-									'<input type="button" onclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="删除" />\n' +
+									'<input type="button" onclick="delCartItem(#{cid})" class="cart-del btn btn-default btn-xs" value="删除" />\n' +
 									'</td>\n' +
 									'</tr>';
 							tr = tr.replaceAll(/#{cid}/g, list[i].cid);
@@ -351,6 +351,10 @@
 					dataType: "JSON",
 					success: function (json) {
 						if (json.state == 200) {
+							if (json.data <= 0) {
+								delCartItem(cid);
+								return;
+							}
 							$("#goodsCount" + cid).val(json.data);
 							// 获取某个标签内部的内容，标签
 							let price = $("#goodsPrice" + cid).html();
@@ -362,6 +366,24 @@
 					},
 					error: function (xhr) {
 						alert("减少购物车商品数量时产生未知的异常！" + xhr.status);
+					}
+				});
+			}
+
+			function delCartItem(cid) {
+				$.ajax({
+					url: "/carts/" + cid + "/delete",
+					type: "POST",
+					dataType: "JSON",
+					success: function (json) {
+						if (json.state == 200) {
+							showCartList();
+						} else {
+							alert("删除购物车数据失败：" + json.message);
+						}
+					},
+					error: function (xhr) {
+						alert("删除购物车商品时产生未知的异常！" + xhr.status);
 					}
 				});
 			}

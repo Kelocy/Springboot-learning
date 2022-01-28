@@ -104,6 +104,21 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
+    public void delete(Integer cid, Integer uid, String username) {
+        Cart result = cartMapper.findByCid(cid);
+        if (result == null) {
+            throw new CartNotFoundException("数据不存在");
+        }
+        if (!result.getUid().equals(uid)) {
+            throw new AccessDeniedException("数据非法访问");
+        }
+        Integer rows = cartMapper.deleteByCid(cid);
+        if (rows != 1) {
+            throw new UpdateException("删除数据产生未知的异常");
+        }
+    }
+
+    @Override
     public List<CartVO> getVOByCid(Integer uid, Integer[] cids) {
         List<CartVO> list = cartMapper.findVOByCid(cids);
         Iterator<CartVO> it = list.iterator();

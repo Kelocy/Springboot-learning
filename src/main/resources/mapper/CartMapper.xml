@@ -25,6 +25,10 @@
     <select id="findByUidAndPid" resultMap="CartEntityMap">
         SELECT * FROM t_cart WHERE uid=#{uid} AND pid=#{pid}
     </select>
+
+    <delete id="deleteByCid">
+        DELETE FROM t_cart WHERE cid=#{cid}
+    </delete>
     
     <select id="findVOByUid" resultType="com.cy.store.vo.CartVO">
         SELECT

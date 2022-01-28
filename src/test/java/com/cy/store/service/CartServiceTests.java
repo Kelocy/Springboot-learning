@@ -17,4 +17,9 @@ public class CartServiceTests {
         // 已存在的一件购物车中数据的更新
         cartService.addToCart(9, 100000421, 5, "Administrator");
     }
+
+    @Test
+    public void delete() {
+        cartService.delete(10, 9, "test03");
+    }
 }

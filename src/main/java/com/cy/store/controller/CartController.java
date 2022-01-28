@@ -50,4 +50,10 @@ public class CartController extends BaseController {
         List<CartVO> data = cartService.getVOByCid(getUidFromSession(session), cids);
         return new JsonResult<>(OK, data);
     }
+
+    @RequestMapping("{cid}/delete")
+    public JsonResult<Void> delete(@PathVariable("cid") Integer cid, HttpSession session) {
+        cartService.delete(cid, getUidFromSession(session), getUsernameFromSession(session));
+        return new JsonResult<>(OK);
+    }
 }

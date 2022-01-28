@@ -39,6 +39,11 @@ public class CartMapperTests {
     }
 
     @Test
+    public void deleteByCid() {
+        cartMapper.deleteByCid(11);
+    }
+
+    @Test
     public void findByUid() {
         System.out.println(cartMapper.findVOByUid(9));
     }
